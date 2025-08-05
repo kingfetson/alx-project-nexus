@@ -1,25 +1,36 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+
 interface HeroProps {
   title: string;
-  description: string;
+  description?: string;
   backgroundImage: string;
 }
 
-export default function HeroBanner({ title, description, backgroundImage }: HeroProps) {
+const HeroBanner: React.FC<HeroProps> = ({ title, description, backgroundImage }) => {
   return (
-    <div className="relative h-[60vh] w-full mb-8 text-white">
-      <img
-        src={backgroundImage}
-        alt={title}
-        className="absolute w-full h-full object-cover opacity-60"
+    <section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh]">
+      {/* ✅ Background Image */}
+      <Image
+        src={backgroundImage || "/placeholder-banner.jpg"}
+        alt="Hero Banner"
+        fill
+        className="object-cover"
+        priority
+        unoptimized
       />
-      <div className="absolute bottom-20 left-10 max-w-xl">
-        <h1 className="text-4xl font-bold">{title}</h1>
-        <p className="mt-3 text-sm text-gray-200">{description}</p>
-        <div className="mt-4 flex gap-3">
-          <button className="bg-red-600 px-4 py-2 rounded">▶ Play</button>
-          <button className="bg-gray-600 px-4 py-2 rounded">+ My List</button>
-        </div>
+
+      {/* ✅ Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-6 sm:px-12">
+        <h1 className="text-3xl sm:text-5xl font-bold text-white">{title}</h1>
+        <p className="mt-4 text-sm sm:text-lg max-w-2xl text-gray-300">
+          {description ?? "No description available."}
+        </p>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default HeroBanner;

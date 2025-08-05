@@ -14,27 +14,23 @@ export default async function HomePage() {
     MediaResult[],
     MediaResult[],
     MediaResult[]
-  ] = await Promise.all([
-    getTrendingAll(),
-    getPopularMovies(),
-    getPopularTV(),
-  ]);
+  ] = await Promise.all([getTrendingAll(), getPopularMovies(), getPopularTV()]);
 
-  // ✅ Format data
+  // ✅ Format data to match MediaResult
   const trending = formatMedia(trendingData);
   const popularMovies = formatMedia(popularMoviesData);
   const popularTV = formatMedia(popularTVData);
 
   // ✅ Pick a static featured item
-  const featured = trendingData.length > 0 ? trendingData[0] : null;
+  const featured = trending.length > 0 ? trending[0] : null;
 
   return (
     <main className="bg-black text-white min-h-screen">
       {/* ✅ Hero Banner */}
       {featured && (
         <HeroBanner
-          title={featured.title || featured.name || "Featured Title"}
-          description={featured.overview ?? "No description available."}
+          title={featured.title}
+          description={featured.overview}
           backgroundImage={
             featured.backdropPath
               ? `https://image.tmdb.org/t/p/original${featured.backdropPath}`
