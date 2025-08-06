@@ -1,36 +1,32 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 
-interface HeroProps {
+interface HeroBannerProps {
   title: string;
-  description?: string;
+  description: string;
   backgroundImage: string;
 }
 
-const HeroBanner: React.FC<HeroProps> = ({ title, description, backgroundImage }) => {
+export default function HeroBanner({ title, description, backgroundImage }: HeroBannerProps) {
   return (
-    <section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh]">
-      {/* ✅ Background Image */}
-      <Image
-        src={backgroundImage || "/placeholder-banner.jpg"}
-        alt="Hero Banner"
-        fill
-        className="object-cover"
-        priority
-        unoptimized
-      />
-
-      {/* ✅ Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-6 sm:px-12">
-        <h1 className="text-3xl sm:text-5xl font-bold text-white">{title}</h1>
-        <p className="mt-4 text-sm sm:text-lg max-w-2xl text-gray-300">
-          {description ?? "No description available."}
-        </p>
+    <div className="relative w-full h-[70vh] bg-black text-white">
+      {/* ✅ Ensure parent has relative position for 'fill' to work */}
+      <div className="absolute inset-0">
+        <Image
+          src={backgroundImage}
+          alt={title}
+          fill
+          priority
+          className="object-cover object-center brightness-50"
+        />
       </div>
-    </section>
-  );
-};
 
-export default HeroBanner;
+      {/* ✅ Content Overlay */}
+      <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-16 max-w-3xl">
+        <h1 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">{title}</h1>
+        <p className="text-lg md:text-xl opacity-90">{description}</p>
+      </div>
+    </div>
+  );
+}

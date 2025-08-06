@@ -10,44 +10,46 @@ export interface MediaResult {
   type: "movie" | "tv";
 }
 
+// ✅ Use absolute path for placeholder images
+const PLACEHOLDER_POSTER = "/images/placeholder-poster.png";
+const PLACEHOLDER_BANNER = "/images/placeholder-banner.jpg";
+
+// ✅ Axios instance
 const api = axios.create({
-  baseURL:
-    "https://TMDB-Movies-and-TV-Shows-API-by-APIRobots.proxy-production.allthingsdev.co/v1/tmdb",
+  baseURL: "https://api.themoviedb.org/3",
   headers: {
-    "x-apihub-key": process.env.NEXT_PUBLIC_APIHUB_KEY || "",
-    "x-apihub-host": "TMDB-Movies-and-TV-Shows-API-by-APIRobots.allthingsdev.co",
-    "x-apihub-endpoint": "85ffa74b-8298-40ac-908a-736892987ab1",
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER}`, // Use v4 token
     Accept: "application/json",
   },
 });
 
 /**
- * ✅ Fetch and map movie data
+ * ✅ Fetch and format TMDB data
  */
 const fetchData = async (
   endpoint: string,
-  type: "movie" | "tv"
+  type?: "movie" | "tv"
 ): Promise<MediaResult[]> => {
   try {
     const res = await api.get(endpoint);
 
-    if (!res.data?.items) {
+    if (!res.data?.results) {
       console.warn("⚠️ No results found for:", endpoint);
       return [];
     }
 
-    return res.data.items.map((item: any) => ({
-      id: item.id || Math.random(), // fallback if no id
+    return res.data.results.map((item: any) => ({
+      id: item.id,
       title: item.title || item.name || "Untitled",
       name: item.name,
       overview: item.overview || "No description available.",
       posterPath: item.poster_path
         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-        : "/placeholder-poster.png",
+        : PLACEHOLDER_POSTER,
       backdropPath: item.backdrop_path
         ? `https://image.tmdb.org/t/p/original${item.backdrop_path}`
-        : "/placeholder-banner.jpg",
-      type,
+        : PLACEHOLDER_BANNER,
+      type: type || item.media_type || (item.title ? "movie" : "tv"),
     }));
   } catch (error: any) {
     console.error("❌ API Fetch Error:", {
@@ -63,6 +65,6 @@ const fetchData = async (
 /**
  * ✅ Exported API functions
  */
-export const getTrendingAll = () => fetchData("/", "movie");
-export const getPopularMovies = () => fetchData("/", "movie");
-export const getPopularTV = () => fetchData("/", "tv");
+export const getTrendingAll = () => fetchData("/trending/all/week");
+export const getPopularMovies = () => fetchData("/movie/popular", "movie");
+export const getPopularTV = () => fetchData("/tv/popular", "tv");
