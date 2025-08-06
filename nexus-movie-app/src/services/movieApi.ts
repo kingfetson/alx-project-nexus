@@ -10,32 +10,34 @@ export interface MediaResult {
   type: "movie" | "tv";
 }
 
-// ✅ Axios instance
 const api = axios.create({
-  baseURL: "https://api.themoviedb.org/3",
+  baseURL:
+    "https://TMDB-Movies-and-TV-Shows-API-by-APIRobots.proxy-production.allthingsdev.co/v1/tmdb",
   headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER}`, // Use v4 token
+    "x-apihub-key": process.env.NEXT_PUBLIC_APIHUB_KEY || "",
+    "x-apihub-host": "TMDB-Movies-and-TV-Shows-API-by-APIRobots.allthingsdev.co",
+    "x-apihub-endpoint": "85ffa74b-8298-40ac-908a-736892987ab1",
     Accept: "application/json",
   },
 });
 
 /**
- * ✅ Fetch and format TMDB data
+ * ✅ Fetch and map movie data
  */
 const fetchData = async (
   endpoint: string,
-  type?: "movie" | "tv"
+  type: "movie" | "tv"
 ): Promise<MediaResult[]> => {
   try {
     const res = await api.get(endpoint);
 
-    if (!res.data?.results) {
+    if (!res.data?.items) {
       console.warn("⚠️ No results found for:", endpoint);
       return [];
     }
 
-    return res.data.results.map((item: any) => ({
-      id: item.id,
+    return res.data.items.map((item: any) => ({
+      id: item.id || Math.random(), // fallback if no id
       title: item.title || item.name || "Untitled",
       name: item.name,
       overview: item.overview || "No description available.",
@@ -45,7 +47,7 @@ const fetchData = async (
       backdropPath: item.backdrop_path
         ? `https://image.tmdb.org/t/p/original${item.backdrop_path}`
         : "/placeholder-banner.jpg",
-      type: type || item.media_type || (item.title ? "movie" : "tv"),
+      type,
     }));
   } catch (error: any) {
     console.error("❌ API Fetch Error:", {
@@ -61,6 +63,6 @@ const fetchData = async (
 /**
  * ✅ Exported API functions
  */
-export const getTrendingAll = () => fetchData("/trending/all/week");
-export const getPopularMovies = () => fetchData("/movie/popular", "movie");
-export const getPopularTV = () => fetchData("/tv/popular", "tv");
+export const getTrendingAll = () => fetchData("/", "movie");
+export const getPopularMovies = () => fetchData("/", "movie");
+export const getPopularTV = () => fetchData("/", "tv");
