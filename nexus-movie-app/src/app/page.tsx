@@ -6,10 +6,9 @@ import {
   getPopularTV,
   MediaResult,
 } from "@/services/movieApi";
-import { formatMedia } from "@/utils/formatData";
 
 export default async function HomePage() {
-  // ✅ Fetch data from API
+  // ✅ Fetch data from APIHub proxy
   const [trendingData, popularMoviesData, popularTVData]: [
     MediaResult[],
     MediaResult[],
@@ -20,20 +19,18 @@ export default async function HomePage() {
     getPopularTV(),
   ]);
 
-  // ✅ Debug logs (will show up in server console)
-  console.log("Trending raw:", trendingData);
-  console.log("Movies raw:", popularMoviesData);
-  console.log("TV raw:", popularTVData);
+  // ✅ Debug logs
+  console.log("📌 Trending Raw Data:", trendingData);
+  console.log("📌 Popular Movies Raw Data:", popularMoviesData);
+  console.log("📌 Popular TV Raw Data:", popularTVData);
 
-  // ✅ Format data
-  const trending = formatMedia(trendingData);
-  const popularMovies = formatMedia(popularMoviesData);
-  const popularTV = formatMedia(popularTVData);
-
-  console.log("Trending formatted:", trending);
-
-  // ✅ Pick a static featured item
-  const featured = trending.length > 0 ? trending[0] : null;
+  // ✅ Pick a featured item (fallback to first available)
+  const featured =
+    trendingData.length > 0
+      ? trendingData[0]
+      : popularMoviesData.length > 0
+      ? popularMoviesData[0]
+      : null;
 
   return (
     <main className="bg-black text-white min-h-screen">
@@ -42,19 +39,15 @@ export default async function HomePage() {
         <HeroBanner
           title={featured.title}
           description={featured.overview}
-          backgroundImage={
-            featured.backdropPath
-              ? `https://image.tmdb.org/t/p/original${featured.backdropPath}`
-              : "/placeholder-banner.jpg"
-          }
+          backgroundImage={featured.backdropPath}
         />
       )}
 
       {/* ✅ Carousels */}
       <section className="px-6 mt-[-50px] relative z-10">
-        <Carousel title="Trending Now" items={trending} />
-        <Carousel title="Popular Movies" items={popularMovies} />
-        <Carousel title="Popular TV Shows" items={popularTV} />
+        <Carousel title="Trending Now" items={trendingData} />
+        <Carousel title="Popular Movies" items={popularMoviesData} />
+        <Carousel title="Popular TV Shows" items={popularTVData} />
       </section>
     </main>
   );
