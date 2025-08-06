@@ -14,12 +14,23 @@ export default async function HomePage() {
     MediaResult[],
     MediaResult[],
     MediaResult[]
-  ] = await Promise.all([getTrendingAll(), getPopularMovies(), getPopularTV()]);
+  ] = await Promise.all([
+    getTrendingAll(),
+    getPopularMovies(),
+    getPopularTV(),
+  ]);
 
-  // ✅ Format data to match MediaResult
+  // ✅ Debug logs (will show up in server console)
+  console.log("Trending raw:", trendingData);
+  console.log("Movies raw:", popularMoviesData);
+  console.log("TV raw:", popularTVData);
+
+  // ✅ Format data
   const trending = formatMedia(trendingData);
   const popularMovies = formatMedia(popularMoviesData);
   const popularTV = formatMedia(popularTVData);
+
+  console.log("Trending formatted:", trending);
 
   // ✅ Pick a static featured item
   const featured = trending.length > 0 ? trending[0] : null;
