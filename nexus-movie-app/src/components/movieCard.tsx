@@ -10,29 +10,38 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ item, onClick }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(item.id, item.type);
+    }
+  };
+
   return (
     <div
       className="relative w-[160px] sm:w-[200px] md:w-[220px] lg:w-[240px] cursor-pointer hover:scale-105 transition-transform duration-300"
-      onClick={() => onClick && onClick(item.id, item.type)}
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
     >
-      {/* ✅ Poster Image with fallback */}
-      <div className="rounded-md overflow-hidden shadow-md bg-gray-800">
+      {/* ✅ Poster with fallback */}
+      <div className="rounded-md overflow-hidden shadow-md bg-gray-800 aspect-[2/3] relative">
         <Image
           src={
-            item.posterPath
-              ? `https://image.tmdb.org/t/p/w500${item.posterPath}`
-              : "/placeholder-poster.png"
+            item.posterPath?.startsWith("http")
+              ? item.posterPath
+              : `https://image.tmdb.org/t/p/w500${item.posterPath}`
           }
           alt={item.title || "Untitled Movie"}
-          width={240}
-          height={360}
+          fill
           className="object-cover rounded-md"
+          sizes="(max-width: 768px) 160px, 240px"
           priority={false}
           unoptimized
         />
       </div>
 
-      {/* ✅ Movie/TV title with fallback */}
+      {/* ✅ Title */}
       <p className="mt-2 text-sm text-white truncate w-full">
         {item.title || "Untitled Movie"}
       </p>
