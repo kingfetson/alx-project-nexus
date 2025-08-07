@@ -1,4 +1,4 @@
-import axios from "axios";
+// services/movieApi.ts
 
 export interface MediaResult {
   id: number;
@@ -10,35 +10,37 @@ export interface MediaResult {
   type: "movie" | "tv";
 }
 
-// ✅ Use absolute path for placeholder images
-const PLACEHOLDER_POSTER = "/images/placeholder-poster.png";
+const PLACEHOLDER_POSTER = "/images/placeholder-poster.jpg";
 const PLACEHOLDER_BANNER = "/images/placeholder-banner.jpg";
 
-// ✅ Axios instance
-const api = axios.create({
-  baseURL: "https://api.themoviedb.org/3",
-  headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_BEARER}`, // Use v4 token
-    Accept: "application/json",
-  },
-});
+// ✅ Use environment variables
+const API_KEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY!;
+const API_HOST = process.env.NEXT_PUBLIC_MOVIE_API_HOST!;
+const API_ENDPOINT = process.env.NEXT_PUBLIC_MOVIE_API_ENDPOINT!;
+const API_BASE = process.env.NEXT_PUBLIC_MOVIE_API_BASE!;
 
-/**
- * ✅ Fetch and format TMDB data
- */
 const fetchData = async (
   endpoint: string,
   type?: "movie" | "tv"
 ): Promise<MediaResult[]> => {
   try {
-    const res = await api.get(endpoint);
+    const res = await fetch(`${API_BASE}${endpoint}`, {
+      method: "GET",
+      headers: {
+        "x-apihub-key": API_KEY,
+        "x-apihub-host": API_HOST,
+        "x-apihub-endpoint": API_ENDPOINT,
+      },
+    });
 
-    if (!res.data?.results) {
+    const data = await res.json();
+
+    if (!data?.results) {
       console.warn("⚠️ No results found for:", endpoint);
       return [];
     }
 
-    return res.data.results.map((item: any) => ({
+    return data.results.map((item: any) => ({
       id: item.id,
       title: item.title || item.name || "Untitled",
       name: item.name,
@@ -54,17 +56,13 @@ const fetchData = async (
   } catch (error: any) {
     console.error("❌ API Fetch Error:", {
       message: error.message,
-      status: error.response?.status,
       url: endpoint,
-      data: error.response?.data,
     });
     return [];
   }
 };
 
-/**
- * ✅ Exported API functions
- */
+// ✅ Exported API functions
 export const getTrendingAll = () => fetchData("/trending/all/week");
 export const getPopularMovies = () => fetchData("/movie/popular", "movie");
 export const getPopularTV = () => fetchData("/tv/popular", "tv");
