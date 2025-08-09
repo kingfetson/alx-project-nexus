@@ -6,7 +6,7 @@ import {
   type Movie,
   type Genre,
 } from "@/lib/omdb"
-import NetflixClient from "@/components/netflix-client"
+import NetflixClient from "@/components/net-client"
 
 // Movie fallback data
 const fallbackMovies: Movie[] = [

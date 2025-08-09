@@ -1,5 +1,5 @@
 import { getPopularMovies, getTrendingMovies, getMovieGenres, type Movie, type Genre } from "@/lib/omdb"
-import NetflixClient from "@/components/netflix-client"
+import NetflixClient from "@/components/net-client"
 
 // My List fallback data (user's saved content)
 const fallbackMyList: Movie[] = [
