@@ -1,5 +1,5 @@
-import NetflixContent from "@/components/net-content"
+import NetContent from "@/components/net-content"
 
 export default function HomePage() {
-  return <NetflixContent />
+  return <NetContent />
 }
