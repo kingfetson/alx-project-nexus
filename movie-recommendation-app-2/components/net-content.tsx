@@ -1,5 +1,5 @@
 import { getPopularMovies, getTrendingMovies, getMovieGenres, type Movie, type Genre } from "@/lib/omdb"
-import NetflixClient from "./netflix-client"
+import NetflixClient from "./net-client"
 
 // Fallback data in case API fails
 const fallbackMovies: Movie[] = [

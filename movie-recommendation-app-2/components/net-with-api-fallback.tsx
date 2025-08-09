@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import NetflixWorking from './netflix-working'
+import NetflixWorking from './net-working'
 
 // Simple API test component
 export default function NetflixWithApiFallback() {
