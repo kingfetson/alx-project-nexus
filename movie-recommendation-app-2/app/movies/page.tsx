@@ -6,7 +6,7 @@ import {
   type Movie,
   type Genre,
 } from "@/lib/omdb"
-import NetflixClient from "@/components/net-client"
+import NetClient from "@/components/net-client"
 
 // Movie fallback data
 const fallbackMovies: Movie[] = [
@@ -29,8 +29,8 @@ const fallbackMovies: Movie[] = [
     title: "Inception",
     overview:
       "Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing valuable secrets from deep within the subconscious during the dream state.",
-    poster_path: "netflix-inspired-poster.png",
-    backdrop_path: "netflix-inspired-poster.png",
+    poster_path: "net-inspired-poster.png",
+    backdrop_path: "net-inspired-poster.png",
     release_date: "2010-07-16",
     vote_average: 8.8,
     genre_ids: [28, 878, 53],
@@ -71,8 +71,8 @@ const fallbackMovies: Movie[] = [
     title: "The Godfather",
     overview:
       "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
-    poster_path: "netflix-inspired-poster.png",
-    backdrop_path: "netflix-inspired-poster.png",
+    poster_path: "net-inspired-poster.png",
+    backdrop_path: "net-inspired-poster.png",
     release_date: "1972-03-24",
     vote_average: 9.2,
     genre_ids: [80, 18],
@@ -193,7 +193,7 @@ export default async function MoviesPage() {
         🎬 Movies
         <div className="text-xs opacity-75">{usingAPI ? "OMDb API" : "Local Data"}</div>
       </div>
-      <NetflixClient featuredContent={featuredMovie} contentRows={contentRows} genres={genres.genres} />
+      <NetClient featuredContent={featuredMovie} contentRows={contentRows} genres={genres.genres} />
     </div>
   )
 }

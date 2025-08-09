@@ -400,7 +400,7 @@ function NetflixClient({ featuredContent, contentRows, genres }: NetflixClientPr
         <div className="flex items-center justify-between px-4 md:px-12 py-4">
           <div className="flex items-center gap-8">
             <Link href="/" className="text-red-600 text-2xl font-bold">
-              NETFLIX
+              SilverScreenet
             </Link>
             <nav className="hidden md:flex items-center gap-6">
               <Link href="/" className="text-white hover:text-gray-300 transition-colors">
@@ -475,7 +475,7 @@ function NetflixClient({ featuredContent, contentRows, genres }: NetflixClientPr
                   Help Center
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-white hover:bg-gray-800">
-                  Sign out of Netflix
+                  Sign out of SilverScreenet
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

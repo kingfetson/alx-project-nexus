@@ -14,7 +14,7 @@ interface ContentRow {
   items: (Movie | TVShow)[]
 }
 
-interface NetflixClientProps {
+interface NetClientProps {
   featuredContent: Movie | TVShow
   contentRows: ContentRow[]
   genres: Genre[]
@@ -45,7 +45,7 @@ function getImageUrl(path: string): string {
   return `/${path}`
 }
 
-export default function NetflixClient({ featuredContent, contentRows, genres }: NetflixClientProps) {
+export default function NetflixClient({ featuredContent, contentRows, genres }: NetClientProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null)
 
@@ -59,7 +59,7 @@ export default function NetflixClient({ featuredContent, contentRows, genres }: 
         <div className="flex items-center justify-between px-4 md:px-12 py-4">
           {/* Logo and Navigation */}
           <div className="flex items-center space-x-8">
-            <div className="text-red-600 text-2xl font-bold">NETFLIX</div>
+            <div className="text-red-600 text-2xl font-bold">SilverScreenet</div>
             <nav className="hidden md:flex space-x-6">
               <a href="/" className="hover:text-gray-300 transition-colors">
                 Home

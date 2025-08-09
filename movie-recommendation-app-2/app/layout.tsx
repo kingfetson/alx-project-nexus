@@ -4,8 +4,8 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Netflix Clone",
-  description: "A Netflix clone built with Next.js and OMDb API",
-    generator: 'v0.dev'
+  description: "An App built with Next.js and OMDb API",
+    
 }
 
 export default function RootLayout({

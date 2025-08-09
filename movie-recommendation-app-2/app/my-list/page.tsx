@@ -64,8 +64,8 @@ const fallbackMyList: Movie[] = [
     title: "Dark",
     overview:
       "A family saga with a supernatural twist, set in a German town, where the disappearance of two young children exposes the relationships among four families.",
-    poster_path: "dark-netflix-poster.png",
-    backdrop_path: "dark-netflix-poster.png",
+    poster_path: "dark-net-poster.png",
+    backdrop_path: "dark-net-poster.png",
     release_date: "2017-12-01",
     vote_average: 8.8,
     genre_ids: [80, 18, 9648],

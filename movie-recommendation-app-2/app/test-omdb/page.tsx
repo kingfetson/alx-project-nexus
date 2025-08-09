@@ -73,7 +73,7 @@ export default function TestOMDbPage() {
           <h1 className="text-2xl font-bold mb-4 text-red-500">Test Failed</h1>
           <p className="text-gray-400 mb-6">Error: {error}</p>
           <Link href="/" className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors">
-            Back to Netflix Clone
+            Back to SilverScreenet
           </Link>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function TestOMDbPage() {
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">No test results available</h2>
           <Link href="/" className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors">
-            Back to Netflix Clone
+            Back to SilverScreenet
           </Link>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function TestOMDbPage() {
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-4">OMDb API Test Results</h1>
             <Link href="/" className="text-blue-400 hover:text-blue-300 transition-colors">
-              ← Back to Netflix Clone
+              ← Back to SilverScreenet
             </Link>
           </div>
 
@@ -187,7 +187,7 @@ export default function TestOMDbPage() {
               {summary.successful === summary.total ? (
                 <>
                   <div className="text-green-400">✅ All tests passed! Your OMDb API is working perfectly.</div>
-                  <div>• Your Netflix clone will now use real movie data from OMDb</div>
+                  <div>• SilverScreenet will now use real movie data from OMDb</div>
                   <div>• Movie posters and details will be fetched from the API</div>
                   <div>• Fallback to local images will only happen if API is unavailable</div>
                 </>
@@ -201,7 +201,7 @@ export default function TestOMDbPage() {
                 <>
                   <div className="text-red-400">❌ All tests failed. Using fallback images.</div>
                   <div>• Check your API key and internet connection</div>
-                  <div>• The Netflix clone will use local poster images</div>
+                  <div>• SilverScreenet  will use local poster images</div>
                 </>
               )}
             </div>

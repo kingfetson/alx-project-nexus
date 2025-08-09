@@ -6,7 +6,7 @@ import {
   type TVShow,
   type Genre,
 } from "@/lib/omdb"
-import NetflixClient from "@/components/net-client"
+import NetClient from "@/components/net-client"
 
 // TV Show fallback data
 const fallbackTVShows: TVShow[] = [
@@ -122,7 +122,7 @@ export default async function TVShowsPage() {
   let apiTVShows: TVShow[] = []
   let trendingTVShows: TVShow[] = []
   let topRatedTVShows: TVShow[] = []
-  let usingAPI = false
+  let usingAPI = true
 
   if (process.env.NEXT_PUBLIC_OMDB_API_KEY) {
     try {
@@ -187,7 +187,7 @@ export default async function TVShowsPage() {
         📺 TV Shows
         <div className="text-xs opacity-75">{usingAPI ? "OMDb API" : "Local Data"}</div>
       </div>
-      <NetflixClient featuredContent={featuredTVShow} contentRows={contentRows} genres={genres.genres} />
+      <NetClient featuredContent={featuredTVShow} contentRows={contentRows} genres={genres.genres} />
     </div>
   )
 }
