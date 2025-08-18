@@ -61,7 +61,11 @@ SilverScreenet/
 └── 📄 README.md             # This file
 \`\`\`
 
-## 🚀 **Quick Start**
+## screenShot!
+[Home Page](./public/HomePage.png)
+
+
+## **Quick Start**
 
 ### **1. Clone & Install**
 \`\`\`bash
